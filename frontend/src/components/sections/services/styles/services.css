@@ -1,0 +1,481 @@
+/* Base section styling */
+.services-section {
+    background-color: #0a0a0a;
+    padding: 1.5rem 0;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* Base64 encoded noise for better performance */
+.services-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.services-wrapper {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+
+
+.services-container {
+    position: relative;
+    overflow: visible;  /* Allow overflow in both directions */
+    touch-action: pan-x;
+}
+
+.services-heading {
+    font-size: 1.875rem;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 10;
+
+}
+
+
+/* Cards wrapper */
+.cards-wrapper {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.5s ease-out;
+}
+
+/* Individual card */
+.card {
+    width: 100%;
+    height: 550px;
+    flex-shrink: 0;
+    /* Simplify transform stack */
+    transform: translateZ(0);
+    transition: all 0.3s;
+    position: relative;
+ 
+}
+
+.card:hover {
+    transform: translateY(-1rem);
+}
+
+.card-container {
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        #18181b 20%,  /* Dark grey for top 30% */
+        white 30%     /* White for bottom 70% */
+    );
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card top section */
+.card-top-section {
+    position: relative;
+    height: 10rem;
+    background: #18181b;
+    overflow: visible; /* Allow overflow */
+}
+
+.card-clip-path {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4rem;
+    background: #18181b;
+    transform: skewY(-3deg) translateY(2rem);
+    overflow: visible; /* Also allow overflow here */
+}
+
+
+.card-overlay {
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+    overflow: visible; /* And here */
+}
+
+/* Icon box */
+.icon-box {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
+}
+
+.icon-container {
+    transform: scale(1);
+    transition: transform 0.3s;
+}
+
+.card:hover .icon-container {
+    transform: scale(1.1);
+}
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+    color: white;
+}
+
+/* Card content */
+.card-content {
+    padding: 3rem;
+    padding-bottom: 5rem;
+    position: relative;
+    height: calc(100% - 12rem);
+}
+
+.card-category {
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    color: #71717a;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #18181b;
+    margin-bottom: 1.5rem;
+}
+
+.card-description {
+    color: #52525b;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+}
+
+.card-button {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #18181b;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.card:hover .card-button {
+    transform: translateX(0.5rem);
+    color: #52525b;
+}
+
+.button-icon {
+    margin-left: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.3s;
+}
+
+.card:hover .button-icon {
+    transform: translateX(0.25rem);
+}
+
+/* Navigation */
+.nav-buffer {
+    display: none;
+    width: 16rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button {
+    width: 6rem !important; /* Increased size */
+    height: 6rem !important; /* Increased size */
+    border-radius: 16px !important; /* Slightly more rounded */
+    background: rgba(255, 255, 255, 0) !important; /* Slightly more opaque */
+    backdrop-filter: blur(6px) !important; /* Stronger blur effect */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background-color 0.3s, transform 0.3s !important; /* Added scaling effect */
+    outline: none !important;
+    border: 0; /* Thicker solid border */
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.nav-button:hover,
+.nav-button:focus {
+    background: rgba(255, 255, 255, 0) !important; /* More pronounced hover effect */
+    outline: none !important;
+    transform: scale(1.1) !important; /* Scaling effect on hover/focus */
+}
+
+.nav-icon {
+    width: 6rem !important; /* Increased size */
+    height: 6rem !important; /* Increased size */
+    color: white !important;
+    transition: transform 0.3s !important;
+}
+
+.nav-button:hover .nav-icon,
+.nav-button:focus .nav-icon {
+    transform: scale(1.2) !important; /* Icon enlarges on hover */
+}
+
+
+/* Decorative elements */
+.pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    pointer-events: none;
+}
+
+.bottom-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #e4e4e7;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+}
+
+.card:hover .bottom-line {
+    transform: scaleX(1);
+}
+
+/* Aesthetic elements */
+.glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, black, rgba(0,0,0,0.8), transparent);
+}
+
+.grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    pointer-events: none;
+    background-image: url('/grain.png');
+    mix-blend-mode: overlay;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+    .services-section {
+        padding: 6rem 0;
+    }
+    
+    .services-wrapper {
+        max-width: 1400px;
+        padding: 0 2rem;
+    }
+    
+    .services-heading {
+        font-size: 3rem;
+        margin-bottom: 6rem;
+    }
+    
+    .cards-wrapper {
+        gap: 2rem;
+    }
+    
+    .card {
+        width: 420px;
+        height: 650px;
+    }
+    
+    .nav-buffer {
+        display: flex;
+    }
+    
+    .card-title {
+        font-size: 1.875rem;
+    }
+    
+    .card-description {
+        font-size: 1.125rem;
+    }
+}
+
+/* Touch interaction styles - Mobile Only */
+@media (hover: none) and (max-width: 767px) {
+    .services-container {
+        position: relative;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        touch-action: pan-x; /* Simplified touch action */
+        -webkit-tap-highlight-color: transparent;
+        /* Remove any potential transform conflicts */
+        transform: none;
+        /* Prevent rubber-banding on iOS */
+        overscroll-behavior-x: none;
+    }
+    
+    .cards-wrapper {
+        display: flex;
+        gap: 1rem;
+        padding: 0 1rem;
+        /* Simplified scroll snapping */
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        /* Remove transforms that might conflict */
+        transform: none;
+        /* Prevent text selection during swipe */
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    
+    .card {
+        flex: 0 0 85%;
+        width: 85%;
+        height: 500px;
+        scroll-snap-align: center;
+        /* Remove scroll-snap-stop to allow smoother scrolling */
+        /* Remove transforms that might cause issues */
+        transform: none;
+        /* Prevent any touch events on cards themselves */
+        pointer-events: none;
+    }
+
+    .card-container {
+        pointer-events: auto; /* Re-enable pointer events for content */
+    }
+    
+    .card-top-section {
+        height: 8rem;
+    }
+    
+    .card-clip-path {
+        height: 3rem;
+        transform: skewY(-3deg) translateY(1.5rem);
+    }
+    
+    .card-content {
+        height: calc(100% - 8rem);
+        padding: 2rem;
+        padding-bottom: 4rem;
+    }
+    
+    .card-category {
+        margin-bottom: 0.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .card-description {
+        margin-bottom: 2rem;
+        font-size: 0.9375rem;
+    }
+    
+    .card-button {
+        bottom: 2rem;
+        left: 2rem;
+    }
+    
+    .card:hover {
+        transform: none;
+    }
+    
+    .nav-buffer {
+        display: none;
+    }
+}
+
+
+
+
+
+/*services lines for title */
+
+
+
+
+.services-heading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.services-heading {
+    margin: 0;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.2em;
+}
+
+/* Left line - fade from right to left */
+.heading-line:first-child {
+    height: 2px;
+    width: 14rem;
+    margin-top: 0.5em;
+    border-radius: 0 1px 1px 0; /* Subtle rounding on right side */
+    background: linear-gradient(
+        to left,
+        transparent,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.3) 30%,
+        transparent 100%
+    );
+    flex-shrink: 0;
+}
+
+/* Right line - fade from left to right */
+.heading-line:last-child {
+    height: 2px;
+    width: 14rem;
+    margin-top: 0.5em;
+    border-radius: 1px 0 0 1px; /* Subtle rounding on left side */
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.3) 30%,
+        transparent 100%
+    );
+    flex-shrink: 0;
+}
+
+/* Adjust for mobile */
+@media (max-width: 768px) {
+    .heading-line:first-child,
+    .heading-line:last-child {
+        width: 6rem;
+    }
+
+    .services-heading-container {
+        gap: 1.5rem;
+    }
+}

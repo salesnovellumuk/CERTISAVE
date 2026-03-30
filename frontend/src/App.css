@@ -1,0 +1,85 @@
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  position: fixed; /* Prevent page swipe/bounce */
+  height: 100%;
+  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+ }
+ 
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overscroll-behavior: none; /* Prevents bounce effect */
+ }
+ 
+ body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  touch-action: none;
+ }
+ 
+ .logo {
+  width: auto;
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+ }
+ 
+ .logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+ }
+ 
+ .logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+ }
+ 
+ @keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+ }
+ 
+ @media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+ }
+ 
+ .card {
+  width: 100%;
+  padding: 2em;
+ }
+ 
+ .read-the-docs {
+  width: 100%;
+  color: #888;
+ }
+ 
+ /* For components that should be swipeable/scrollable */
+ .scrollable-component {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y pinch-zoom;
+ }
+
+
+
+
+
+
+ .scrollable {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}

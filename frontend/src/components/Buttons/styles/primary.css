@@ -1,0 +1,186 @@
+/* styles/primary.css */
+.primary-button {
+  /* Core styling */
+  background: transparent;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 14px 28px;
+  border: 2px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 140px;
+  min-height: 48px;
+  
+  /* Visual enhancements */
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0); /* Hardware acceleration */
+  
+  /* Typography improvements */
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+  text-decoration: none;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle shine effect */
+.primary-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+.primary-button:hover::before {
+  left: 100%;
+}
+
+/* Hover state */
+.primary-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transform: translateY(-2px);
+  border-color: #ffffff;
+}
+
+/* Active state */
+.primary-button:active {
+  transform: translateY(0px);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+}
+
+/* Focus state for accessibility */
+.primary-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Disabled state */
+.primary-button:disabled {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.primary-button:disabled::before {
+  display: none;
+}
+
+.primary-button:disabled:hover {
+  transform: none;
+  background: transparent;
+}
+
+/* Loading state (optional) */
+.primary-button.loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.primary-button.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: button-loading 0.8s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes button-loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Size variations */
+.primary-button.small {
+  padding: 10px 20px;
+  font-size: 14px;
+  min-width: 100px;
+  min-height: 36px;
+  border-radius: 50px;
+}
+
+.primary-button.large {
+  padding: 18px 36px;
+  font-size: 18px;
+  min-width: 160px;
+  min-height: 56px;
+  border-radius: 50px;
+}
+
+/* Icon support */
+.primary-button .icon {
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.primary-button .icon:last-child {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.primary-button .icon-only {
+  margin: 0;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .primary-button {
+    border-color: #ffffff;
+  }
+  
+  .primary-button:hover {
+    border-color: #ffffff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .primary-button {
+    transition: none;
+  }
+  
+  .primary-button::before {
+    display: none;
+  }
+  
+  .primary-button:hover {
+    transform: none;
+  }
+  
+  .primary-button:active {
+    transform: none;
+  }
+}
