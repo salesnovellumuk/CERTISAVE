@@ -147,7 +147,7 @@ const HowItWorks = () => {
 
         <div className="hiw-cta-wrap">
           <a href="#contact" className="hiw-cta-btn">
-            I am interested, get me started
+            Learn more!
           </a>
         </div>
 
