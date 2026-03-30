@@ -4,8 +4,8 @@ import './styles/about.css';
 const stats = [
   { number: '100%', label: 'Managed for you' },
   { number: '£0', label: 'Hidden fees' },
-  { number: '25+', label: 'Cert types tracked' },
-  { number: '48hr', label: 'Average booking time' },
+  { number: '5min', label: 'Setup time' },
+  { number: '0', label: 'Days wasted' },
 ];
 
 const About = () => {
