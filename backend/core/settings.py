@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.railway.app'] + [h for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.railway.app',"certisave.com", "www.certisave.com"] + [h for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h]
 
 
 # ── Apps ──────────────────────────────────────────────────────────────────────
