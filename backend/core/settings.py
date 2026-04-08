@@ -14,7 +14,6 @@ ALLOWED_HOSTS = [
     'certisave.co.uk', 'www.certisave.co.uk',
 ] + [h for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h]
 
-AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -27,8 +26,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "api",
     "middleware",
-    "accounts",
-    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
