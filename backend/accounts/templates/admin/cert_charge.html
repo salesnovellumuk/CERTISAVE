@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charge & Book — {{ cert.employee.full_name }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <style>
+        .charge-wrap { max-width: 640px; margin: 2rem auto; }
+        .charge-info { background: #f0f4ff; border-left: 4px solid #2563eb; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.75rem; font-size: 0.9rem; line-height: 1.7; }
+        .charge-info strong { color: #1e3a8a; }
+        .charge-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .charge-field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+        .charge-field.full { grid-column: 1 / -1; }
+        .charge-field label { font-size: 0.8rem; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em; }
+        .charge-field input,
+        .charge-field textarea { padding: 0.6rem 0.75rem; border: 1.5px solid #ddd; border-radius: 6px; font-size: 0.95rem; width: 100%; box-sizing: border-box; font-family: inherit; }
+        .charge-field input:focus,
+        .charge-field textarea:focus { outline: none; border-color: #2563eb; }
+        .charge-field textarea { resize: vertical; min-height: 80px; }
+        .charge-submit { background: #2563eb; color: white; border: none; padding: 0.85rem 2rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 0.5rem; transition: background 0.2s; }
+        .charge-submit:hover { background: #1d4ed8; }
+        .charge-back { display: block; text-align: center; margin-top: 1rem; color: #6b7280; font-size: 0.85rem; text-decoration: none; }
+        .charge-back:hover { color: #2563eb; }
+        .charge-section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; margin: 1.25rem 0 0.5rem; border-top: 1px solid #e5e7eb; padding-top: 1.25rem; grid-column: 1 / -1; }
+    </style>
+</head>
+<body class="colMS" id="django-admin">
+<div id="container">
+    <div id="content" class="colMS">
+        <div class="charge-wrap">
+            <h1 style="margin-bottom:1.5rem;">Charge & Book — {{ cert.employee.full_name }}</h1>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="errornote">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <div class="charge-info">
+                <strong>Employee:</strong> {{ cert.employee.full_name }}<br>
+                <strong>Cert:</strong> {{ cert.cert_type.name }}<br>
+                <strong>Expires:</strong> {{ cert.expiry_date }}<br>
+                <strong>Company:</strong> {{ company.name }}<br>
+                {% if cert.cert_type.booking_instructions %}
+                    <strong>Booking notes:</strong> {{ cert.cert_type.booking_instructions }}
+                {% endif %}
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="charge-form-grid">
+
+                    <p class="charge-section-label">Payment</p>
+
+                    <div class="charge-field full">
+                        <label>Amount (£)</label>
+                        <input type="number" name="amount" step="0.01" placeholder="147.00" required>
+                    </div>
+
+                    <p class="charge-section-label">Course Details</p>
+
+                    <div class="charge-field">
+                        <label>Course Date</label>
+                        <input type="date" name="course_date" required>
+                    </div>
+                    <div class="charge-field">
+                        <label>Course Time</label>
+                        <input type="time" name="course_time">
+                    </div>
+                    <div class="charge-field">
+                        <label>Provider</label>
+                        <input type="text" name="provider" placeholder="e.g. CITB, St John Ambulance">
+                    </div>
+                    <div class="charge-field">
+                        <label>Location</label>
+                        <input type="text" name="location" placeholder="e.g. 123 High Street, London">
+                    </div>
+                    <div class="charge-field full">
+                        <label>Booking Reference</label>
+                        <input type="text" name="booking_reference" placeholder="e.g. BK-20394">
+                    </div>
+                    <div class="charge-field full">
+                        <label>Additional Info <span style="font-weight:400;text-transform:none;letter-spacing:0;">(parking, what to bring, instructions etc.)</span></label>
+                        <textarea name="additional_info" placeholder="e.g. Bring photo ID, parking available on site, wear steel toe caps"></textarea>
+                    </div>
+
+                    <p class="charge-section-label">Internal Notes</p>
+
+                    <div class="charge-field full">
+                        <label>Notes</label>
+                        <textarea name="notes" placeholder="Any internal notes about this booking"></textarea>
+                    </div>
+
+                </div>
+
+                <input type="submit" value="Charge Card & Log Booking" class="charge-submit">
+            </form>
+
+            <a href="{{ base }}/accounts/cert/" class="charge-back">← Back to certs</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

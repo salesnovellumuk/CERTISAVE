@@ -31,7 +31,7 @@ const faqs = [
     a: 'No contract, no minimum term. You can cancel any time and you will not be charged again.',
   },
   {
-    q: 'What if I have more than 15 employees?',
+    q: 'What if I have more than 50 employees?',
     a: 'Get in touch and we will sort out a plan that works for your team size.',
   },
 ];

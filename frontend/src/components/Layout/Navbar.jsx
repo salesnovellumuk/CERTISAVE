@@ -13,7 +13,6 @@ const WaitlistModal = ({ onClose }) => {
             <path d="M2 2L16 16M16 2L2 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
-
         <div className="modal-header">
           <div className="modal-tag">Early Access</div>
           <h2 className="modal-title">Join the waitlist</h2>
@@ -21,7 +20,6 @@ const WaitlistModal = ({ onClose }) => {
             Be first in line when Certisave launches. No spam, just a heads up when you are good to go.
           </p>
         </div>
-
         {state.succeeded ? (
           <div className="modal-success">
             <div className="modal-success-icon">
@@ -58,7 +56,7 @@ const WaitlistModal = ({ onClose }) => {
 };
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -80,13 +78,13 @@ const Navbar = () => {
             <a href="/" className="navbar-logo">
               Certi<span>save</span>
             </a>
-            <button className="navbar-cta" onClick={() => setModalOpen(true)}>
-              Join Waitlist
-            </button>
+            <div className="navbar-actions">
+              <a href="/login" className="navbar-login">Log in</a>
+              <a href="/signup" className="navbar-cta">Get Started →</a>
+            </div>
           </div>
         </div>
       </nav>
-
       {modalOpen && <WaitlistModal onClose={() => setModalOpen(false)} />}
     </>
   );

@@ -1,0 +1,138 @@
+.notifs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.notifs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.notifs-title {
+  color: #fff;
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.notifs-subtitle {
+  color: #888;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.notifs-mark-all-btn {
+  background: none;
+  border: 1px solid #2a2d3a;
+  color: #888;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.notifs-mark-all-btn:hover {
+  background: #2a2d3a;
+  color: #fff;
+}
+
+.notifs-empty {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.notifs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notif-row {
+  background: #1a1d27;
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid #4f6ef7;
+}
+
+.notif-row:hover {
+  background: #22263a;
+}
+
+.notif-row--read {
+  border-left-color: #2a2d3a;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.notif-row--read:hover {
+  background: #1a1d27;
+}
+
+.notif-dot-wrap {
+  width: 10px;
+  display: flex;
+  justify-content: center;
+  padding-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4f6ef7;
+  flex-shrink: 0;
+}
+
+.notif-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-title {
+  color: #fff;
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.notif-message {
+  color: #888;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.notif-time {
+  color: #555;
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+}
+
+.loading {
+  color: #888;
+}
+
+@media (max-width: 480px) {
+  .notifs-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .notifs-mark-all-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

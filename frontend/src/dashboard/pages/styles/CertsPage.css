@@ -1,0 +1,147 @@
+.certs-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.certs-title {
+  color: #fff;
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.certs-subtitle {
+  color: #888;
+  margin: 0 0 1.5rem;
+}
+
+.certs-controls {
+  margin-bottom: 1.5rem;
+}
+
+.certs-select {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #2a2d3a;
+  background: #1a1d27;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.certs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.certs-empty {
+  color: #888;
+}
+
+.cert-row {
+  background: #1a1d27;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cert-row:hover {
+  background: #22263a;
+}
+
+.cert-info {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+  min-width: 0;
+}
+
+.cert-name {
+  color: #fff;
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cert-meta {
+  color: #888;
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cert-days {
+  width: 200px;
+  text-align: right;
+  padding-right: 1rem;
+  color: #888;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cert-divider {
+  width: 1px;
+  background: #2a2d3a;
+  height: 60%;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.cert-status-wrapper {
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cert-status {
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.loading {
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .certs-title {
+    font-size: 1.4rem;
+  }
+
+  .certs-select {
+    width: 100%;
+  }
+
+  .cert-info {
+    padding: 1rem 1.25rem;
+  }
+
+  .cert-days {
+    width: 160px;
+    font-size: 0.8rem;
+  }
+
+  .cert-status-wrapper {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-days {
+    display: none;
+  }
+
+  .cert-status-wrapper {
+    width: 90px;
+  }
+}

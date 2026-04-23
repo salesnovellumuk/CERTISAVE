@@ -1,0 +1,367 @@
+.employees-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.employees-header {
+  margin-bottom: 1.5rem;
+}
+
+.employees-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.employees-title {
+  color: #fff;
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.employees-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  background: #1a1d27;
+  border: 1px solid #2a2d3a;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  margin-top: 4px;
+}
+
+.employees-count--limit {
+  color: #f5a623;
+  border-color: #f5a62340;
+  background: #f5a62312;
+}
+
+.employees-subtitle {
+  color: #888;
+  margin: 0;
+}
+
+.employees-message {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid;
+}
+
+.employees-message--success {
+  background: #2ecc7122;
+  color: #2ecc71;
+  border-color: #2ecc71;
+}
+
+.employees-message--error {
+  background: #ff4d4d22;
+  color: #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+.employees-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.employees-select {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #2a2d3a;
+  background: #1a1d27;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.employees-add-btn {
+  background: #4f6ef7;
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.employees-add-btn:hover { background: #3d5ce0; }
+
+.employees-upgrade-btn {
+  background: #f5a62318;
+  border: 1px solid #f5a62340;
+  color: #f5a623;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.employees-upgrade-btn:hover { background: #f5a62328; }
+
+.employees-add-form {
+  background: #1a1d27;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 480px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.employees-add-form-title {
+  color: #fff;
+  margin: 0;
+}
+
+.employees-add-section-label {
+  color: #4f6ef7;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0.25rem 0 0;
+}
+
+.employees-add-form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.employees-input {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #2a2d3a;
+  background: #0f1117;
+  color: #fff;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.employees-input::placeholder { color: #555; }
+.employees-input--date { color-scheme: dark; }
+
+.ni-wrapper {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.ni-box {
+  width: 36px;
+  height: 44px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #2a2d3a;
+  background: #0f1117;
+  color: #fff;
+  font-size: 1rem;
+  flex: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ni-box--gap { margin-right: 0.4rem; }
+.ni-box:focus { outline: none; border-color: #4f6ef7; }
+
+.employees-add-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.employees-save-btn {
+  background: #4f6ef7;
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.employees-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.employees-cancel-btn {
+  background: none;
+  border: 1px solid #2a2d3a;
+  color: #888;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.employees-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.employees-empty { color: #888; }
+
+.employee-row {
+  background: #1a1d27;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.15s;
+  gap: 1rem;
+}
+
+.employee-row:hover { background: #22263a; }
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.employee-name {
+  color: #fff;
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.employee-email {
+  color: #888;
+  margin: 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.employee-badges {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.badge--danger { background: #ff4d4d22; color: #ff4d4d; }
+.badge--warn   { background: #f5a62322; color: #f5a623; }
+.badge--action { background: #f5a62318; color: #f5a623; border: 1px solid #f5a62340; }
+
+.employee-cert-count { color: #888; font-size: 0.85rem; white-space: nowrap; }
+.employee-chevron    { color: #555; font-size: 1rem; }
+
+.loading { color: #888; }
+
+/* Upgrade modal */
+.upgrade-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.upgrade-modal {
+  background: #1a1d27;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.upgrade-modal-title {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.upgrade-modal-body {
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.upgrade-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.upgrade-confirm-btn {
+  background: #4f6ef7;
+  border: none;
+  color: #fff;
+  padding: 0.85rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.upgrade-confirm-btn:hover    { background: #3d5ce0; }
+.upgrade-confirm-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.upgrade-cancel-btn {
+  background: none;
+  border: 1px solid #2a2d3a;
+  color: #888;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .employees-title  { font-size: 1.4rem; }
+  .employees-add-form { max-width: 100%; }
+  .employees-add-form-row { flex-direction: column; }
+  .employees-input  { flex: none; width: 100%; }
+  .employee-row     { padding: 1rem 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .employees-controls { flex-direction: column; align-items: stretch; }
+  .employees-select   { width: 100%; }
+  .employees-add-btn  { width: 100%; text-align: center; }
+  .employees-upgrade-btn { width: 100%; text-align: center; }
+  .employee-badges    { display: none; }
+}

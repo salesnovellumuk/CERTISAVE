@@ -1,0 +1,119 @@
+.inactive-page {
+  min-height: 100vh;
+  background: #0f1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: inherit;
+}
+
+.inactive-loading {
+  color: #888;
+}
+
+.inactive-card {
+  background: #1a1d27;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.inactive-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.inactive-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #2ecc7122;
+  border: 1px solid #2ecc7140;
+  color: #2ecc71;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inactive-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.inactive-sub {
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.inactive-plan {
+  width: 100%;
+  background: #0f1117;
+  border: 1px solid #2a2d3a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.inactive-plan-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2d3a;
+}
+
+.inactive-plan-row:last-child { border-bottom: none; }
+.inactive-plan-row span:first-child { color: #888; }
+.inactive-plan-row span:last-child  { color: #fff; font-weight: 600; }
+
+.inactive-error {
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin: 0;
+  background: #ff4d4d18;
+  border: 1px solid #ff4d4d30;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inactive-resubscribe-btn {
+  width: 100%;
+  background: #4f6ef7;
+  border: none;
+  color: #fff;
+  padding: 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+
+.inactive-resubscribe-btn:hover    { background: #3d5ce0; }
+.inactive-resubscribe-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.inactive-logout-btn {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.inactive-logout-btn:hover { color: #888; }
