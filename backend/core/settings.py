@@ -1,7 +1,5 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-load_dotenv()
 import stripe
 
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
@@ -14,7 +12,7 @@ STRIPE_GROWTH_PRICE_ID   = os.environ.get('STRIPE_GROWTH_PRICE_ID')
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-prod')
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'localhost', '127.0.0.1',
@@ -152,12 +150,9 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Cookie security — secure in prod only
 CSRF_COOKIE_SECURE    = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SAMESITE  = 'Lax'
-
-# Auth cookie settings
 SESSION_COOKIE_HTTPONLY = True
 
 if not DEBUG:
