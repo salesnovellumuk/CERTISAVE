@@ -31,7 +31,7 @@ class SimpleProtection:
         cache.set(key, count, 60)  # 300 requests per minute
 
         ua = request.META.get('HTTP_USER_AGENT', '').lower()
-        if 'bot' in ua or 'scan' in ua or 'curl' in ua:
+        if ('bot' in ua or 'scan' in ua or 'curl' in ua) and 'linkedinbot' not in ua:
             logger.warning(f'Blocked suspicious user agent — IP: {ip}, UA: {ua}, path: {request.path}')
             return HttpResponse('Blocked', status=403)
 
