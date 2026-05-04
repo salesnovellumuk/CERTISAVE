@@ -1,7 +1,8 @@
 const PLANS = [
-  { id: 'starter',    label: 'Starter',    price: '£6.99', per: '/month', desc: 'Up to 15 employees. Perfect for small firms.'  },
-  { id: 'growth',     label: 'Growth',     price: '£24.99', per: '/month', desc: 'Up to 50 employees. For growing operations.'   },
-  { id: 'enterprise', label: 'Enterprise', price: '',        per: '',       desc: 'Larger teams and multi-site operations.', comingSoon: true },
+  { id: 'solo',       label: 'Solo',       price: '£3.99',  per: '/month', desc: 'Just you. For sole traders managing your own certs.'  },
+  { id: 'starter',    label: 'Starter',    price: '£6.99',  per: '/month', desc: 'Up to 15 employees. Perfect for small firms.' },
+  { id: 'growth',     label: 'Growth',     price: '£24.99', per: '/month', desc: 'Up to 50 employees. For growing operations.'  },
+  { id: 'enterprise', label: 'Enterprise', price: '',       per: '',       desc: 'Larger teams and multi-site operations.', comingSoon: true },
 ];
 
 const Step5Plan = ({ plan, setPlan, onNext, onBack }) => (

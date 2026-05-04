@@ -9,7 +9,7 @@ const Toggle = ({ checked, onChange, label }) => (
   </label>
 );
 
-const EmployeeEditModal = ({ editEmployee, editTab, setEditTab, onSave, onClose, saving }) => {
+const EmployeeEditModal = ({ editEmployee, editTab, setEditTab, onSave, onClose, saving, isSolo }) => {
   const [state, setState] = useState({ ...editEmployee });
   const update = (field, val) => setState(prev => ({ ...prev, [field]: val }));
   const niChars = (state.ni_number?.replace(/\s/g, '') + '         ').split('').slice(0, 9);
@@ -20,7 +20,7 @@ const EmployeeEditModal = ({ editEmployee, editTab, setEditTab, onSave, onClose,
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-box modal-box--large" onClick={e => e.stopPropagation()}>
         <div className="modal-box-header">
-          <h3 className="modal-title">Edit Employee</h3>
+          <h3 className="modal-title">{isSolo ? 'Edit Your Profile' : 'Edit Employee'}</h3>
           <button className="modal-close-btn" onClick={onClose}>✕</button>
         </div>
 
@@ -86,12 +86,16 @@ const EmployeeEditModal = ({ editEmployee, editTab, setEditTab, onSave, onClose,
 
           {editTab === 'training' && (
             <div className="edit-tab-content">
-              <p className="detail-section-label">Employment</p>
+              <p className="detail-section-label">{isSolo ? 'Trade' : 'Employment'}</p>
               <div className="detail-form-row">
-                <input type="text" placeholder="Job title" value={state.job_title} onChange={e => update('job_title', e.target.value)} className="detail-input" />
+                <input type="text" placeholder={isSolo ? 'Your trade (e.g. Electrician)' : 'Job title'} value={state.job_title} onChange={e => update('job_title', e.target.value)} className="detail-input" />
               </div>
-              <p className="detail-label">Employment start date</p>
-              <input type="date" value={state.employment_start_date} onChange={e => update('employment_start_date', e.target.value)} className="detail-input detail-input--date" />
+              {!isSolo && (
+                <>
+                  <p className="detail-label">Employment start date</p>
+                  <input type="date" value={state.employment_start_date} onChange={e => update('employment_start_date', e.target.value)} className="detail-input detail-input--date" />
+                </>
+              )}
               <p className="detail-section-label">CSCS</p>
               <input type="text" placeholder="CITB HS&E test ID" value={state.citb_test_id} onChange={e => update('citb_test_id', e.target.value)} className="detail-input" />
               <p className="detail-section-label">Booking preferences</p>

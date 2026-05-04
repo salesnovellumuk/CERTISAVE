@@ -4,6 +4,7 @@ from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics, permissions
+from rest_framework.permissions import BasePermission
 from rest_framework.authtoken.models import Token
 from accounts.models import Company, Employee, Cert, CertType, BookedCourse, Notification, ChangeRequest
 from accounts.notifications import notify
@@ -18,6 +19,25 @@ from .serializers import (
     NotificationSerializer,
     ChangeRequestSerializer,
 )
+
+PRICE_IDS = {
+    'solo':    settings.STRIPE_SOLO_PRICE_ID,
+    'starter': settings.STRIPE_STARTER_PRICE_ID,
+    'growth':  settings.STRIPE_GROWTH_PRICE_ID,
+}
+
+VALID_PLANS = ['solo', 'starter', 'growth']
+
+
+class NotSoloOrReadOnly(BasePermission):
+    """Solo users can read and update existing records but can't create or delete."""
+    def has_permission(self, request, view):
+        if request.method in ('GET', 'HEAD', 'OPTIONS', 'PATCH', 'PUT'):
+            return True
+        if not request.user.is_authenticated or not request.user.company:
+            return False
+        return not request.user.company.is_solo
+
 
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
@@ -138,7 +158,7 @@ class CompanyView(generics.RetrieveUpdateAPIView):
 
 class EmployeeListView(generics.ListCreateAPIView):
     serializer_class = EmployeeListSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, NotSoloOrReadOnly]
 
     def get_queryset(self):
         return Employee.objects.filter(
@@ -174,7 +194,7 @@ class EmployeeListView(generics.ListCreateAPIView):
 
 class EmployeeDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EmployeeDetailSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, NotSoloOrReadOnly]
 
     def get_queryset(self):
         return Employee.objects.filter(company=self.request.user.company)
@@ -269,11 +289,14 @@ class MeView(APIView):
 
     def get(self, request):
         user = request.user
+        company = user.company
         return Response({
             'first_name': user.first_name,
             'last_name':  user.last_name,
             'email':      user.email,
-            'company':    user.company.name if user.company else '',
+            'company':    company.name if company else '',
+            'plan':       company.plan if company else '',
+            'is_solo':    company.is_solo if company else False,
         })
 
 
@@ -336,11 +359,6 @@ class SetupCompleteView(APIView):
 
         if not payment_method_id:
             return Response({'error': 'payment_method_id required'}, status=status.HTTP_400_BAD_REQUEST)
-
-        PRICE_IDS = {
-            'starter': settings.STRIPE_STARTER_PRICE_ID,
-            'growth':  settings.STRIPE_GROWTH_PRICE_ID,
-        }
 
         price_id = PRICE_IDS.get(company.plan)
         if not price_id:
@@ -432,16 +450,11 @@ class UpgradePlanView(APIView):
         company = request.user.company
         new_plan = request.data.get('plan')
 
-        if new_plan not in ['starter', 'growth']:
+        if new_plan not in VALID_PLANS:
             return Response({'error': 'Invalid plan'}, status=status.HTTP_400_BAD_REQUEST)
 
         if company.plan == new_plan:
             return Response({'error': 'Already on this plan'}, status=status.HTTP_400_BAD_REQUEST)
-
-        PRICE_IDS = {
-            'starter': settings.STRIPE_STARTER_PRICE_ID,
-            'growth':  settings.STRIPE_GROWTH_PRICE_ID,
-        }
 
         try:
             subscription = stripe.Subscription.retrieve(company.stripe_subscription_id)

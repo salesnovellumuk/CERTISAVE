@@ -136,6 +136,7 @@ class CompanySerializer(serializers.ModelSerializer):
     expired = serializers.SerializerMethodField()
     employee_limit = serializers.IntegerField(read_only=True)
     at_employee_limit = serializers.BooleanField(read_only=True)
+    is_solo = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Company
@@ -143,6 +144,7 @@ class CompanySerializer(serializers.ModelSerializer):
             'id',
             'name',
             'plan',
+            'is_solo',
             'subscription_active',
             'employee_count',
             'employee_limit',
@@ -214,7 +216,7 @@ class RegisterSerializer(serializers.Serializer):
     email        = serializers.EmailField()
     password     = serializers.CharField(write_only=True, validators=[validate_password])
     company_name = serializers.CharField(max_length=255)
-    plan         = serializers.ChoiceField(choices=['starter', 'growth'])
+    plan         = serializers.ChoiceField(choices=['solo', 'starter', 'growth'])
 
     def validate_email(self, value):
         value = value.lower()
@@ -240,6 +242,14 @@ class RegisterSerializer(serializers.Serializer):
             is_staff=False,
             is_superuser=False,
         )
+        # Solo users: auto-create their own employee record so they don't have to add themselves
+        if company.plan == 'solo':
+            Employee.objects.create(
+                company=company,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                email=user.email,
+            )
         stripe_customer = stripe.Customer.create(
             email=validated_data['email'],
             name=validated_data['company_name'],

@@ -9,12 +9,14 @@ import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostDetail from './pages/BlogPostDetail';
+import PricingPage from './pages/PricingPage';
 import Signup from './pages/signup/Signup';
 
 import LoginPage from './dashboard/pages/LoginPage';
 import DashboardHome from './dashboard/pages/DashboardHome';
 import EmployeesPage from './dashboard/pages/EmployeesPage';
 import EmployeeDetailPage from './dashboard/pages/EmployeeDetailPage';
+import MyProfilePage from './dashboard/pages/MyProfilePage';
 import CertsPage from './dashboard/pages/CertsPage';
 import BookingsPage from './dashboard/pages/BookingsPage';
 import BookingDetailPage from './dashboard/pages/BookingDetailPage';
@@ -32,6 +34,7 @@ const App = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostDetail />} />
         </Route>
@@ -47,6 +50,7 @@ const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardHome />} />
+            <Route path="/dashboard/my-profile" element={<MyProfilePage />} />
             <Route path="/dashboard/employees" element={<EmployeesPage />} />
             <Route path="/dashboard/employees/:id" element={<EmployeeDetailPage />} />
             <Route path="/dashboard/certs" element={<CertsPage />} />

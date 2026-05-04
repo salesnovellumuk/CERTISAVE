@@ -26,7 +26,7 @@
 @media (max-width: 768px) {
   .navbar,
   .navbar-scrolled {
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     transition: none;
     transform: none;
     -webkit-transform: none;
@@ -43,6 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 2rem;
 }
 
 .navbar-logo {
@@ -52,16 +53,65 @@
   color: #0f172a;
   text-decoration: none;
   letter-spacing: -0.5px;
+  flex-shrink: 0;
 }
 
 .navbar-logo span {
   color: #2563eb;
 }
 
+/* ── Nav links ── */
+.navbar-links {
+  display: none;
+  align-items: center;
+  gap: 4.5rem;
+}
+
+.navbar-link {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  padding: 0;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2563eb;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.navbar-link:hover {
+  color: #2563eb;
+}
+
+.navbar-link:hover::after {
+  width: 100%;
+}
+
+.navbar-link-active {
+  color: #2563eb;
+}
+
+.navbar-link-active::after {
+  width: 100%;
+}
+
+/* ── Actions ── */
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
 .navbar-login {
@@ -70,13 +120,28 @@
   font-weight: 600;
   color: #374151;
   text-decoration: none;
-  padding: 0.6rem 1rem;
-  border-radius: 6px;
+  position: relative;
   transition: color 0.2s ease;
+}
+
+.navbar-login::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2563eb;
+  border-radius: 2px;
+  transition: width 0.25s ease;
 }
 
 .navbar-login:hover {
   color: #2563eb;
+}
+
+.navbar-login:hover::after {
+  width: 100%;
 }
 
 .navbar-cta {
@@ -86,7 +151,7 @@
   color: #fff;
   background: #2563eb;
   border: none;
-  padding: 0.6rem 1.4rem;
+  padding: 0.65rem 1.5rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -100,13 +165,101 @@
   color: #fff;
 }
 
-@media (max-width: 480px) {
-  .navbar { padding: 1rem; }
-  .navbar-scrolled { padding: 0.75rem 1rem; }
-  .navbar-login { display: none; }
+/* ── Hamburger ── */
+.navbar-hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
 }
 
-/* Modal backdrop */
+.navbar-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #0f172a;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+  transform-origin: center;
+}
+
+.bar-open-1 { transform: translateY(7px) rotate(45deg); }
+.bar-open-2 { opacity: 0; transform: scaleX(0); }
+.bar-open-3 { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile menu ── */
+.navbar-mobile-menu {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.5rem;
+  gap: 0.25rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-mobile-link {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  transition: color 0.2s ease;
+}
+
+.navbar-mobile-link:hover {
+  color: #2563eb;
+}
+
+.navbar-mobile-cta {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #2563eb;
+  text-decoration: none;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 0.75rem;
+  transition: background 0.2s ease;
+}
+
+.navbar-mobile-cta:hover {
+  background: #1d4ed8;
+}
+
+/* ── Desktop show links, hide hamburger ── */
+@media (min-width: 768px) {
+  .navbar-links {
+    display: flex;
+  }
+
+  .navbar-hamburger {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-login {
+    display: none;
+  }
+}
+
+/* ── Modal backdrop ── */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -122,7 +275,7 @@
 
 @keyframes backdropIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 .modal {
@@ -139,7 +292,7 @@
 
 @keyframes modalIn {
   from { opacity: 0; transform: translateY(16px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .modal-close {
@@ -158,9 +311,15 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.modal-close:hover { background: #e2e8f0; color: #0f172a; }
 
-.modal-header { margin-bottom: 1.75rem; }
+.modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.modal-header {
+  margin-bottom: 1.75rem;
+}
 
 .modal-tag {
   display: inline-block;
@@ -190,11 +349,23 @@
   margin: 0;
 }
 
-.modal-form { display: flex; flex-direction: column; gap: 1rem; }
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-.modal-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
 
-.modal-label { font-size: 0.78rem; font-weight: 600; color: #374151; }
+.modal-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+}
 
 .modal-input {
   font-family: 'Sora', sans-serif;
@@ -209,7 +380,11 @@
   width: 100%;
   box-sizing: border-box;
 }
-.modal-input::placeholder { color: #94a3b8; }
+
+.modal-input::placeholder {
+  color: #94a3b8;
+}
+
 .modal-input:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
@@ -229,12 +404,18 @@
   transition: all 0.2s ease;
   margin-top: 0.25rem;
 }
+
 .modal-submit:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
 }
-.modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
 
 .modal-success {
   display: flex;
@@ -264,10 +445,19 @@
   margin: 0;
 }
 
-.modal-success-body { font-size: 0.9rem; color: #64748b; margin: 0; }
+.modal-success-body {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
+}
 
-.modal-error { font-size: 0.78rem; color: #ef4444; }
+.modal-error {
+  font-size: 0.78rem;
+  color: #ef4444;
+}
 
 @media (max-width: 480px) {
-  .modal { padding: 2rem 1.5rem; }
+  .modal {
+    padding: 2rem 1.5rem;
+  }
 }

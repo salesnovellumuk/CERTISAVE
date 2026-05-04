@@ -23,7 +23,10 @@ const Step6Payment = ({ plan, onNext, onBack, loading, error }) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const termsRef = useRef(null);
 
-  const planLabel = plan === 'growth' ? 'Growth — £24.99/month' : 'Starter — £6.99/month';
+  const planLabel =
+    plan === 'solo'   ? 'Solo — £3.99/month' :
+    plan === 'growth' ? 'Growth — £24.99/month' :
+                        'Starter — £6.99/month';
 
   useEffect(() => {
     const canvas = canvasRef.current;

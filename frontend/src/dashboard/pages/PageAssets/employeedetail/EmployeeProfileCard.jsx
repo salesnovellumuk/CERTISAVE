@@ -48,7 +48,7 @@ export const ProfileCompletion = ({ employee }) => {
   );
 };
 
-const EmployeeProfileCard = ({ employee, onEdit }) => {
+const EmployeeProfileCard = ({ employee, onEdit, isSolo }) => {
   const [tab, setTab] = useState('basic');
   const addressParts = [employee.address_line_1, employee.address_line_2, employee.city, employee.postcode].filter(Boolean);
 
@@ -60,7 +60,7 @@ const EmployeeProfileCard = ({ employee, onEdit }) => {
         </div>
         <div className="profile-card-identity">
           <h1 className="detail-name">{employee.full_name}</h1>
-          <p className="profile-card-role">{employee.job_title || 'Employee'}</p>
+          <p className="profile-card-role">{employee.job_title || (isSolo ? 'Sole Trader' : 'Employee')}</p>
         </div>
         <button onClick={() => onEdit('basic')} className="detail-edit-emp-btn">Edit</button>
       </div>
@@ -89,8 +89,8 @@ const EmployeeProfileCard = ({ employee, onEdit }) => {
 
       {tab === 'training' && (
         <div className="profile-fields-grid">
-          <Field label="Job title" value={employee.job_title} />
-          <Field label="Start date" value={employee.employment_start_date} />
+          <Field label={isSolo ? 'Trade' : 'Job title'} value={employee.job_title} />
+          {!isSolo && <Field label="Start date" value={employee.employment_start_date} />}
           <Field label="CITB test ID" value={employee.citb_test_id} />
           <Field label="Max travel distance" value={employee.preferred_travel_distance ? `${employee.preferred_travel_distance} miles` : null} />
           <Field label="Driving licence" value={employee.driving_licence ? 'Yes' : 'No'} />

@@ -27,6 +27,7 @@ const EmployeeDetailPage = () => {
   const [employee, setEmployee]             = useState(null);
   const [certTypes, setCertTypes]           = useState([]);
   const [loading, setLoading]               = useState(true);
+  const [isSolo, setIsSolo]                 = useState(false);
   const [showAddForm, setShowAddForm]       = useState(false);
   const [newCert, setNewCert]               = useState({ cert_type: '', issue_date: '', certificate_number: '', is_first_application: true, notes: '', extras: {} });
   const [saving, setSaving]                 = useState(false);
@@ -89,7 +90,17 @@ const EmployeeDetailPage = () => {
     setCertTypes(await res.json());
   };
 
-  useEffect(() => { fetchEmployee(); fetchCertTypes(); }, [id]);
+  const fetchMe = async () => {
+    try {
+      const res = await fetch('/api/me/', opts);
+      if (res.ok) {
+        const data = await res.json();
+        setIsSolo(data.is_solo);
+      }
+    } catch {}
+  };
+
+  useEffect(() => { fetchEmployee(); fetchCertTypes(); fetchMe(); }, [id]);
 
   const getSortedCerts = () => {
     if (!employee) return [];
@@ -120,7 +131,7 @@ const EmployeeDetailPage = () => {
       if (res.ok) {
         fetchEmployee();
         setShowEdit(false);
-        showMessage('Employee updated successfully');
+        showMessage(isSolo ? 'Profile updated successfully' : 'Employee updated successfully');
       } else {
         const d = await res.json();
         console.log('PATCH error body:', d);
@@ -224,13 +235,16 @@ const EmployeeDetailPage = () => {
 
   return (
     <div className="detail-wrapper">
-      <button onClick={() => navigate('/dashboard/employees')} className="detail-back">← Back to Team</button>
+      {!isSolo && (
+        <button onClick={() => navigate('/dashboard/employees')} className="detail-back">← Back to Team</button>
+      )}
 
       {message && <div className={`detail-message detail-message--${messageType}`}>{message}</div>}
 
       <EmployeeProfileCard
         employee={employee}
         onEdit={(tab) => { setEditTab(tab); setShowEdit(true); }}
+        isSolo={isSolo}
       />
 
       <ProfileCompletion employee={employee} />
@@ -243,11 +257,12 @@ const EmployeeDetailPage = () => {
           onSave={handleSaveEmployee}
           onClose={() => setShowEdit(false)}
           saving={savingEmployee}
+          isSolo={isSolo}
         />
       )}
 
       <div className="detail-certs-header">
-        <h2 className="detail-certs-title">Certificates</h2>
+        <h2 className="detail-certs-title">{isSolo ? 'Your Certificates' : 'Certificates'}</h2>
         <div className="detail-certs-actions">
           <select value={certSort} onChange={e => setCertSort(e.target.value)} className="detail-sort-select">
             <option value='expiry_asc'>Expiring soonest</option>

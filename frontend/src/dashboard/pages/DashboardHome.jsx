@@ -38,6 +38,7 @@ const STATUS_COLORS = {
 
 const DashboardHome = () => {
   const [company, setCompany]                   = useState(null);
+  const [user, setUser]                         = useState(null);
   const [certs, setCerts]                       = useState([]);
   const [bookings, setBookings]                 = useState([]);
   const [loading, setLoading]                   = useState(true);
@@ -48,15 +49,17 @@ const DashboardHome = () => {
 
   useEffect(() => {
     const fetchAll = async () => {
-      const [compRes, certsRes, bookRes] = await Promise.all([
+      const [compRes, meRes, certsRes, bookRes] = await Promise.all([
         fetch('/api/company/'),
+        fetch('/api/me/'),
         fetch('/api/certs/'),
         fetch('/api/booked-courses/'),
       ]);
-      const [compData, certsData, bookData] = await Promise.all([
-        compRes.json(), certsRes.json(), bookRes.json()
+      const [compData, meData, certsData, bookData] = await Promise.all([
+        compRes.json(), meRes.json(), certsRes.json(), bookRes.json()
       ]);
       setCompany(compData);
+      setUser(meData);
       setCerts(certsData);
       setBookings(bookData);
       setLoading(false);
@@ -64,20 +67,27 @@ const DashboardHome = () => {
     fetchAll();
   }, []);
 
+  const isSolo = user?.is_solo;
+
   const handleUpgrade = async () => {
     setUpgrading(true);
     try {
+      const targetPlan = isSolo ? 'starter' : 'growth';
       const res = await fetch('/api/payments/upgrade/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'growth' }),
+        body: JSON.stringify({ plan: targetPlan }),
       });
       const data = await res.json();
       if (res.ok) {
         setShowUpgradeModal(false);
         const compRes = await fetch('/api/company/');
         setCompany(await compRes.json());
-        setUpgradeMsg('Upgraded to Growth — you can now add up to 50 employees.');
+        setUpgradeMsg(
+          isSolo
+            ? 'Upgraded to Starter — you can now add up to 15 employees.'
+            : 'Upgraded to Growth — you can now add up to 50 employees.'
+        );
         setTimeout(() => setUpgradeMsg(''), 6000);
       } else {
         setUpgradeMsg(data.error || 'Upgrade failed');
@@ -103,33 +113,48 @@ const DashboardHome = () => {
 
   const atLimit = company?.at_employee_limit;
 
-  const stats = [
-    {
-      label: 'Employees',
-      value: `${company?.total_employees}/${company?.employee_limit}`,
-      variant: atLimit ? 'warn' : 'blue',
-      action: atLimit && company?.plan === 'starter' ? () => setShowUpgradeModal(true) : null,
-      actionLabel: 'Upgrade →',
-    },
-    { label: 'Total Certs',   value: company?.total_certs,   variant: 'blue'   },
-    { label: 'Expiring Soon', value: company?.expiring_soon, variant: 'warn'   },
-    { label: 'Expired',       value: company?.expired,       variant: 'danger' },
-  ];
+  const stats = isSolo
+    ? [
+        { label: 'Total Certs',   value: company?.total_certs,   variant: 'blue'   },
+        { label: 'Expiring Soon', value: company?.expiring_soon, variant: 'warn'   },
+        { label: 'Expired',       value: company?.expired,       variant: 'danger' },
+      ]
+    : [
+        {
+          label: 'Employees',
+          value: `${company?.total_employees}/${company?.employee_limit}`,
+          variant: atLimit ? 'warn' : 'blue',
+          action: atLimit && company?.plan === 'starter' ? () => setShowUpgradeModal(true) : null,
+          actionLabel: 'Upgrade →',
+        },
+        { label: 'Total Certs',   value: company?.total_certs,   variant: 'blue'   },
+        { label: 'Expiring Soon', value: company?.expiring_soon, variant: 'warn'   },
+        { label: 'Expired',       value: company?.expired,       variant: 'danger' },
+      ];
 
   return (
-    <div className="home-wrapper">
+    <div className={`home-wrapper ${isSolo ? 'home-wrapper--solo' : ''}`}>
 
       {showUpgradeModal && (
         <div className="home-upgrade-backdrop" onClick={() => setShowUpgradeModal(false)}>
           <div className="home-upgrade-modal" onClick={e => e.stopPropagation()}>
-            <h2 className="home-upgrade-title">Upgrade to Growth</h2>
+            <h2 className="home-upgrade-title">
+              {isSolo ? 'Upgrade to Starter' : 'Upgrade to Growth'}
+            </h2>
             <p className="home-upgrade-body">
-              You've hit your {company?.employee_limit} employee limit on the Starter plan.
-              Upgrade to Growth for up to 50 employees at £24.99/month.
+              {isSolo ? (
+                <>Hiring someone? Upgrade to Starter to track up to 15 team members at £12.99/month.</>
+              ) : (
+                <>You've hit your {company?.employee_limit} employee limit on the Starter plan. Upgrade to Growth for up to 50 employees at £24.99/month.</>
+              )}
             </p>
             <div className="home-upgrade-actions">
               <button className="home-upgrade-confirm" onClick={handleUpgrade} disabled={upgrading}>
-                {upgrading ? 'Upgrading...' : 'Upgrade to Growth — £24.99/mo'}
+                {upgrading
+                  ? 'Upgrading...'
+                  : isSolo
+                    ? 'Upgrade to Starter — £12.99/mo'
+                    : 'Upgrade to Growth — £24.99/mo'}
               </button>
               <button className="home-upgrade-cancel" onClick={() => setShowUpgradeModal(false)}>
                 Not now
@@ -140,15 +165,19 @@ const DashboardHome = () => {
       )}
 
       <div className="home-header">
-        <h1 className="home-title">{company?.name || 'Your Dashboard'}</h1>
-        <p className="home-subtitle">Here's your compliance overview.</p>
+        <h1 className="home-title">
+          {isSolo ? `Hi ${user?.first_name || ''}` : (company?.name || 'Your Dashboard')}
+        </h1>
+        <p className="home-subtitle">
+          {isSolo ? "Here's your training overview." : "Here's your compliance overview."}
+        </p>
       </div>
 
       {upgradeMsg && (
         <div className="home-upgrade-msg">{upgradeMsg}</div>
       )}
 
-      <div className="stats-grid">
+      <div className={`stats-grid ${isSolo ? 'stats-grid--solo' : ''}`}>
         {stats.map(({ label, value, variant, action, actionLabel }) => (
           <div key={label} className={`stat-card stat-card--${variant}`}>
             <p className="stat-label">{label}</p>
@@ -180,7 +209,7 @@ const DashboardHome = () => {
                 >
                   <div className="urgent-info">
                     <p className="urgent-cert">{cert.cert_type_name}</p>
-                    <p className="urgent-meta">{cert.employee_name || 'Unknown'}</p>
+                    {!isSolo && <p className="urgent-meta">{cert.employee_name || 'Unknown'}</p>}
                   </div>
                   <span
                     className="urgent-badge"
@@ -221,8 +250,8 @@ const DashboardHome = () => {
                       <span className="upcoming-month">{d.toLocaleDateString('en-GB', { month: 'short' })}</span>
                     </div>
                     <div className="upcoming-info">
-                      <p className="upcoming-name">{b.employee_name}</p>
-                      <p className="upcoming-cert">{b.cert_type_name}</p>
+                      {!isSolo && <p className="upcoming-name">{b.employee_name}</p>}
+                      <p className={isSolo ? 'upcoming-name' : 'upcoming-cert'}>{b.cert_type_name}</p>
                       <div className="upcoming-meta-row">
                         {b.course_time && <span className="upcoming-meta"><IconClock />{formatTime(b.course_time)}</span>}
                         {b.provider    && <span className="upcoming-meta"><IconBuilding />{b.provider}</span>}

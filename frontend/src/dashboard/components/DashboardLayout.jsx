@@ -41,6 +41,7 @@ const DashboardLayout = () => {
 
   const closeMenu = () => setMenuOpen(false);
   const firstName = user?.first_name || user?.email?.split('@')[0] || '—';
+  const isSolo = user?.is_solo;
 
   return (
     <div className={styles.wrapper}>
@@ -73,7 +74,11 @@ const DashboardLayout = () => {
 
         <nav className={styles.nav}>
           <NavLink to="/dashboard" end className={({ isActive }) => isActive ? styles.active : ''} onClick={closeMenu}>Overview</NavLink>
-          <NavLink to="/dashboard/employees" className={({ isActive }) => isActive ? styles.active : ''} onClick={closeMenu}>Team</NavLink>
+          {isSolo ? (
+            <NavLink to="/dashboard/my-profile" className={({ isActive }) => isActive ? styles.active : ''} onClick={closeMenu}>My Profile</NavLink>
+          ) : (
+            <NavLink to="/dashboard/employees" className={({ isActive }) => isActive ? styles.active : ''} onClick={closeMenu}>Team</NavLink>
+          )}
           <NavLink to="/dashboard/certs" className={({ isActive }) => isActive ? styles.active : ''} onClick={closeMenu}>Certs</NavLink>
           <NavLink to="/dashboard/bookings" className={({ isActive }) => isActive ? styles.active : ''} onClick={closeMenu}>Bookings</NavLink>
         </nav>

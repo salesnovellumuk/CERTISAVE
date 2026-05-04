@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import './styles/nav.css';
 
@@ -58,6 +59,8 @@ const WaitlistModal = ({ onClose }) => {
 const Navbar = () => {
   const [scrolled, setScrolled]   = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen]   = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -66,25 +69,71 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = modalOpen ? 'hidden' : '';
+    document.body.style.overflow = (modalOpen || menuOpen) ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [modalOpen]);
+  }, [modalOpen, menuOpen]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
+
+  const links = [
+    { label: 'About',   to: '/about'   },
+    { label: 'Pricing', to: '/pricing' },
+    { label: 'News',    to: '/blog'    },
+    { label: 'Contact', to: '/contact' },
+  ];
 
   return (
     <>
       <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
         <div className="navbar-container">
           <div className="navbar-inner">
-            <a href="/" className="navbar-logo">
-              Certi<span>save</span>
-            </a>
+            <Link to="/" className="navbar-logo">
+              Certi<span>Save</span>
+            </Link>
+
+            <div className="navbar-links">
+              {links.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className={`navbar-link ${location.pathname === l.to ? 'navbar-link-active' : ''}`}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+
             <div className="navbar-actions">
               <a href="/login" className="navbar-login">Log in</a>
               <a href="/signup" className="navbar-cta">Get Started →</a>
+              <button
+                className="navbar-hamburger"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+              >
+                <span className={`navbar-bar ${menuOpen ? 'bar-open-1' : ''}`} />
+                <span className={`navbar-bar ${menuOpen ? 'bar-open-2' : ''}`} />
+                <span className={`navbar-bar ${menuOpen ? 'bar-open-3' : ''}`} />
+              </button>
             </div>
           </div>
         </div>
       </nav>
+
+      {menuOpen && (
+        <div className="navbar-mobile-menu">
+          {links.map((l) => (
+            <Link key={l.to} to={l.to} className="navbar-mobile-link">
+              {l.label}
+            </Link>
+          ))}
+          <a href="/login" className="navbar-mobile-link">Log in</a>
+          <a href="/signup" className="navbar-mobile-cta">Get Started →</a>
+        </div>
+      )}
+
       {modalOpen && <WaitlistModal onClose={() => setModalOpen(false)} />}
     </>
   );

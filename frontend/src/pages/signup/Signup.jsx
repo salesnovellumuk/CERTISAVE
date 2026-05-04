@@ -32,9 +32,11 @@ function SignupInner() {
 
   const [clientSecret, setClientSecret] = useState('');
   const [account, setAccount]           = useState({ firstName: '', lastName: '', email: '', password: '' });
-  const [company, setCompany]           = useState({ name: '', trade: '', size: '' });
+  const [company, setCompany]           = useState({ accountType: '', name: '', trade: '', size: '' });
   const [employees, setEmployees]       = useState([blankEmployee()]);
   const [plan, setPlan]                 = useState('starter');
+
+  const isSolo = plan === 'solo' || company.accountType === 'solo';
 
   const next = () => {
     setError('');
@@ -45,7 +47,10 @@ function SignupInner() {
     }, 600);
   };
 
-  const back = () => { setError(''); setStep(s => Math.max(s - 1, 1)); };
+  const back = () => {
+    setError('');
+    setStep(s => Math.max(s - 1, 1));
+  };
 
   const handleRegister = async () => {
     setLoading(true); setError('');
@@ -74,14 +79,30 @@ function SignupInner() {
   const handleCompany = async () => {
     setLoading(true); setError('');
     try {
+      // For sole traders, use their personal name as the "company name"
+      const companyName = company.accountType === 'solo'
+        ? `${account.firstName} ${account.lastName}`.trim()
+        : company.name;
+
       const res = await fetch(`${API}/company/`, {
         method: 'PATCH',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: company.name }),
+        body: JSON.stringify({ name: companyName }),
       });
       if (!res.ok) throw new Error('Could not save company details.');
-      if (company.size === '16–50' || company.size === '50+') {
+
+      // Auto-set plan based on account type / team size
+      if (company.accountType === 'solo') {
+        setPlan('solo');
+        // Pre-fill the single employee with their account name so Step 3 is one tap
+        setEmployees([{
+          ...blankEmployee(),
+          first_name: account.firstName,
+          last_name: account.lastName,
+          email: account.email,
+        }]);
+      } else if (company.size === '16–50' || company.size === '50+') {
         setPlan('growth');
       } else {
         setPlan('starter');
@@ -168,10 +189,10 @@ function SignupInner() {
         ) : (
           <>
             {step === 1 && <Step1Account account={account} setAccount={setAccount} onNext={handleRegister} loading={loading} error={error} />}
-            {step === 2 && <Step2Company company={company} setCompany={setCompany} onNext={handleCompany} onBack={back} loading={loading} error={error} />}
-            {step === 3 && <Step3Employees employees={employees} setEmployees={setEmployees} expandedEmp={expandedEmp} setExpandedEmp={setExpandedEmp} onNext={handleEmployees} onBack={back} loading={loading} error={error} />}
-            {step === 4 && <Step4HowItWorks onNext={next} onBack={back} />}
-            {step === 5 && <Step5Plan plan={plan} setPlan={setPlan} onNext={handlePlan} onBack={back} loading={loading} error={error} />}
+            {step === 2 && <Step2Company company={company} setCompany={setCompany} onNext={handleCompany} onBack={back} loading={loading} error={error} isSolo={isSolo} />}
+            {step === 3 && <Step3Employees employees={employees} setEmployees={setEmployees} expandedEmp={expandedEmp} setExpandedEmp={setExpandedEmp} onNext={handleEmployees} onBack={back} loading={loading} error={error} isSolo={isSolo} />}
+            {step === 4 && <Step4HowItWorks onNext={next} onBack={back} isSolo={isSolo} />}
+            {step === 5 && <Step5Plan plan={plan} setPlan={setPlan} onNext={handlePlan} onBack={back} loading={loading} error={error} isSolo={isSolo} />}
             {step === 6 && <Step6Payment plan={plan} onNext={handlePayment} onBack={back} loading={loading} error={error} />}
             {step === 7 && <Step7Done />}
           </>

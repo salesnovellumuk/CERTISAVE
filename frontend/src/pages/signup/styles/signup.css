@@ -70,6 +70,55 @@
   margin-bottom: 0.6rem;
 }
 
+.signup-account-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.signup-account-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.signup-account-option:hover {
+  border-color: #cbd5e1;
+}
+
+.signup-account-option.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.signup-account-option-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.signup-account-option-sub {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+@media (max-width: 480px) {
+  .signup-account-type {
+    grid-template-columns: 1fr;
+  }
+}
+
 .signup-title {
   font-size: 1.75rem;
   font-weight: 800;

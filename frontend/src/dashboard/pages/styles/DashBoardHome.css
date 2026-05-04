@@ -340,3 +340,16 @@
   .home-title { font-size: 1.4rem; }
   .stat-value { font-size: 1.75rem; }
 }
+
+/* Solo: 3 cards instead of 4 */
+.stats-grid--solo {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .stats-grid--solo { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .stats-grid--solo { grid-template-columns: 1fr; }
+}

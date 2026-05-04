@@ -6,11 +6,13 @@ from datetime import timedelta
 
 class Company(models.Model):
     PLAN_CHOICES = [
+        ('solo', 'Solo'),
         ('starter', 'Starter'),
         ('growth', 'Growth'),
     ]
 
     PLAN_LIMITS = {
+        'solo': 1,
         'starter': 15,
         'growth': 50,
     }
@@ -44,6 +46,10 @@ class Company(models.Model):
     @property
     def at_employee_limit(self):
         return self.employees.count() >= self.employee_limit
+
+    @property
+    def is_solo(self):
+        return self.plan == 'solo'
 
 
 class User(AbstractUser):
