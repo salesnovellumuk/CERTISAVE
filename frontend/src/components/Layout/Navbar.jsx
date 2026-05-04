@@ -80,7 +80,6 @@ const Navbar = () => {
   const links = [
     { label: 'About',   to: '/about'   },
     { label: 'Pricing', to: '/pricing' },
-    { label: 'News',    to: '/blog'    },
     { label: 'Contact', to: '/contact' },
   ];
 
