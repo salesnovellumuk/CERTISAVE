@@ -1,10 +1,8 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 import stripe
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')
 
 STRIPE_SECRET_KEY        = os.environ.get('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET    = os.environ.get('STRIPE_WEBHOOK_SECRET')
